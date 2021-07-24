@@ -1,11 +1,14 @@
 {
-  "name": "nodejs",
+  "name": "boilerplate-nodejs",
   "version": "0.0.0",
-  "repository": "https://github.com/kannkyo/vs-base",
+  "repository": "https://github.com/kannkyo/boilerplate-nodejs",
   "author": "kannkyo <15080890+kannkyo@users.noreply.github.com>",
   "license": "MIT",
   "engines": {
     "node": ">=14"
+  },
+  "publishConfig": {
+    "access": "public"
   },
   "scripts": {
     "start": "node ./bin/www",
