@@ -1,2 +1,3 @@
 # boilerplate-nodejs
-Node.jsプロジェクト用のボイラープレート
+
+Node.js プロジェクト用のボイラープレート
