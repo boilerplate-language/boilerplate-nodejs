@@ -5,6 +5,9 @@
   "repository": "https://github.com/kannkyo/vs-base",
   "author": "kannkyo <15080890+kannkyo@users.noreply.github.com>",
   "license": "MIT",
+  "engines": {
+    "node": ">=14"
+  },
   "scripts": {
     "start": "node ./bin/www",
     "debug": "cross-env DEBUG=* nodemon --inspect ./bin/www"
