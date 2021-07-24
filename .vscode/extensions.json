@@ -1,23 +1,18 @@
 {
+  "unwantedRecommendations": [],
   "recommendations": [
-    // svg
     "cssho.vscode-svgviewer",
-    // js
-    "yoyo.D3Snippets",
+    "yoyo.d3snippets",
     "chenxsan.vscode-standardjs",
-    "xabikos.JavaScriptSnippets",
-    "joelday.docthis",
+    "xabikos.javascriptsnippets",
     "christian-kohler.npm-intellisense",
     "eg2.vscode-npm-script",
     "msjsdiag.vscode-react-native",
     "octref.vetur",
-    // css
     "anseki.vscode-color",
     "naumovs.color-highlight",
-    // gltf
     "cesium.gltf-vscode",
-    // html
-    "abusaidm.html-snippets"
-  ],
-  "unwantedRecommendations": []
+    "abusaidm.html-snippets",
+    "oouo-diogo-perdigao.docthis"
+  ]
 }
