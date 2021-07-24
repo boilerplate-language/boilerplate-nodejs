@@ -9,6 +9,7 @@
   },
   "scripts": {
     "start": "node ./bin/www",
+    "test": "echo do test",
     "debug": "cross-env DEBUG=* nodemon --inspect ./bin/www"
   },
   "dependencies": {
