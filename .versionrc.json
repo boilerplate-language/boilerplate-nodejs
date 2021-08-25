@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/conventional-changelog/conventional-changelog-config-spec/master/versions/2.1.0/schema.json",
+  "types": [
+    {
+      "type": "add",
+      "section": "Added"
+    },
+    {
+      "type": "change",
+      "section": "Changed"
+    },
+    {
+      "type": "deprecate",
+      "section": "Deprecated"
+    },
+    {
+      "type": "remove",
+      "section": "Removed"
+    },
+    {
+      "type": "fix",
+      "section": "Fixed"
+    },
+    {
+      "type": "security",
+      "section": "Security"
+    },
+    {
+      "type": "chore",
+      "hidden": true
+    },
+    {
+      "type": "docs",
+      "hidden": true
+    },
+    {
+      "type": "style",
+      "hidden": true
+    },
+    {
+      "type": "refactor",
+      "hidden": true
+    },
+    {
+      "type": "perf",
+      "hidden": true
+    },
+    {
+      "type": "test",
+      "hidden": true
+    }
+  ]
+}

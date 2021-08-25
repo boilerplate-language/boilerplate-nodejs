@@ -13,6 +13,8 @@
   "scripts": {
     "start": "node ./bin/www",
     "test": "echo do test",
+    "push": "git push --follow-tags origin main",
+    "release": "standard-version",
     "debug": "cross-env DEBUG=* nodemon --inspect ./bin/www"
   },
   "dependencies": {
@@ -27,6 +29,7 @@
     "cross-env": "^7.0.3",
     "nodemon": "^2.0.12",
     "standard": "^16.0.3",
+    "standard-version": "^9.3.0",
     "yarn": "^1.22.10"
   }
 }
