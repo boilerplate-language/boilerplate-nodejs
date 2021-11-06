@@ -2,6 +2,14 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.1](https://github.com/kannkyo/boilerplate-nodejs/compare/v0.0.0...v0.0.1) (2021-11-06)
+
+
+### Added
+
+* @cyclonedx/bom ([794d42e](https://github.com/kannkyo/boilerplate-nodejs/commit/794d42eb83f10dbb0d5756c9c57443c463b4d6e7))
+* **docs:** add sample docs ([9c13159](https://github.com/kannkyo/boilerplate-nodejs/commit/9c13159337dadc7efa24fc137c3934fe82e4ba2f))
+
 ## 0.0.0 (2021-08-25)
 
 
