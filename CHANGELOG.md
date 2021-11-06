@@ -2,6 +2,13 @@
 
 All notable changes to this project will be documented in this file. See [standard-version](https://github.com/conventional-changelog/standard-version) for commit guidelines.
 
+### [0.0.2](https://github.com/kannkyo/boilerplate-nodejs/compare/v0.0.1...v0.0.2) (2021-11-06)
+
+
+### Changed
+
+* **github:** refactor github actions ([73a52dd](https://github.com/kannkyo/boilerplate-nodejs/commit/73a52ddcd6f2db28d8a3a67c651ccfe4485a1003))
+
 ### [0.0.1](https://github.com/kannkyo/boilerplate-nodejs/compare/v0.0.0...v0.0.1) (2021-11-06)
 
 
