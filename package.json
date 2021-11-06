@@ -15,6 +15,7 @@
     "test": "echo do test",
     "push": "git push --follow-tags origin main",
     "release": "standard-version",
+    "postinstall": "cyclonedx-bom -o bom.json",
     "debug": "cross-env DEBUG=* nodemon --inspect ./bin/www"
   },
   "dependencies": {
@@ -26,6 +27,7 @@
     "morgan": "~1.10.0"
   },
   "devDependencies": {
+    "@cyclonedx/bom": "^3.1.1",
     "cross-env": "^7.0.3",
     "nodemon": "^2.0.12",
     "standard": "^16.0.3",
