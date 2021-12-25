@@ -15,7 +15,7 @@
     "test": "echo do test",
     "push": "git push --follow-tags origin main",
     "release": "standard-version",
-    "postinstall": "cyclonedx-bom -o bom.json",
+    "prepack": "cyclonedx-bom -o sbom.xml",
     "debug": "cross-env DEBUG=* nodemon --inspect ./bin/www"
   },
   "dependencies": {

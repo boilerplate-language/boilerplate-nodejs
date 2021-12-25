@@ -153,3 +153,5 @@ $RECYCLE.BIN/
 
 # Windows shortcuts
 *.lnk
+
+sbom.xml
