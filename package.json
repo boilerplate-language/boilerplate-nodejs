@@ -27,7 +27,7 @@
     "morgan": "~1.10.0"
   },
   "devDependencies": {
-    "@cyclonedx/bom": "^3.3.1",
+    "@cyclonedx/bom": "^3.10.0",
     "cross-env": "^7.0.3",
     "nodemon": "^2.0.17",
     "standard": "^16.0.4",
