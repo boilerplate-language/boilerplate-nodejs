@@ -24,6 +24,7 @@ build:
 
 test:
   stage: test
+  needs: ["eslint", "outdated", "sast"]
   script:
     - npm run coverage
   artifacts:
@@ -36,8 +37,6 @@ test:
 
 eslint:
   stage: test
-  dependencies:
-    - build
   script:
     - npx eslint --format junit . > report.xml
   artifacts:
@@ -47,28 +46,24 @@ eslint:
 
 outdated:
   stage: test
-  dependencies:
-    - build
   allow_failure: true
   script:
     - npm outdated
 
 sast:
   stage: test
-  dependencies:
-    - build
 
 publish:
   stage: publish
-  dependencies:
-    - build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   script:
     - npm publish
 
 jsdoc:
   stage: publish
-  dependencies:
-    - build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   script:
     - npm run doc
   artifacts:
@@ -78,8 +73,8 @@ jsdoc:
 
 dmd:
   stage: publish
-  dependencies:
-    - build
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   script:
     - npm run dmd
     - mkdir -p public/
@@ -92,6 +87,8 @@ dmd:
 dockerize:
   image: docker:latest
   stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   services:
     - docker:dind
   before_script:
@@ -102,6 +99,8 @@ dockerize:
 
 pages:
   stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
   script:
     - echo 'Upload all report'
   artifacts:

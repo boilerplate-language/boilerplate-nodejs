@@ -1,0 +1,14 @@
+{
+    "all": true,
+    "include": [
+        "app.js",
+        "routes/**/*.js"
+    ],
+    "exclude": [
+        "test/**/*.spec.js"
+    ],
+    "reporter": [
+        "cobertura",
+        "text"
+    ]
+}
