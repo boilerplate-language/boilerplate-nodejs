@@ -1,0 +1,53 @@
+name: Supply Chain Security Scan
+
+on:
+  workflow_dispatch:
+  push:
+    branches: ["main"] # Scorecard support only default branch
+  branch_protection_rule:
+  schedule:
+    - cron: "50 6 * * 6"
+
+permissions: read-all
+
+jobs:
+  analyze:
+    runs-on: ubuntu-latest
+    permissions:
+      security-events: write
+      id-token: write # Used to receive a badge. (Upcoming feature)
+      contents: read # Needs for private repositories.
+      actions: read # Needs for private repositories.
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@a12a3943b4bdde767164f792f33f40b04645d846 # v3.0.0
+        with:
+          persist-credentials: false
+
+      - name: Scan by Scorecard
+        uses: ossf/scorecard-action@3e15ea8318eee9b333819ec77a36aca8d39df13e # v1.1.1
+        with:
+          results_file: results.sarif
+          results_format: sarif
+          # (Optional) Read-only PAT token. Uncomment the `repo_token` line below if:
+          # - you want to enable the Branch-Protection check on a *public* repository, or
+          # - you are installing Scorecards on a *private* repository
+          # To create the PAT, follow the steps in https://github.com/ossf/scorecard-action#authentication-with-pat.
+          repo_token: ${{ secrets.SCORECARD_READ_TOKEN }}
+
+          # Publish the results for public repositories to enable scorecard badges. For more details, see
+          # https://github.com/ossf/scorecard-action#publishing-results.
+          # For private repositories, `publish_results` will automatically be set to `false`, regardless
+          # of the value entered here.
+          publish_results: true
+
+      - name: Upload Scorecard report to artifact
+        uses: actions/upload-artifact@6673cd052c4cd6fcf4b4e6e60ea986c889389535 # v3.0.0
+        with:
+          name: SARIF file
+          path: results.sarif
+
+      - name: Publish Scorecard report to GitHub Security
+        uses: github/codeql-action/upload-sarif@5f532563584d71fdef14ee64d17bafb34f751ce5 # v1.0.26
+        with:
+          sarif_file: results.sarif
