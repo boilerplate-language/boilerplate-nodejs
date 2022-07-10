@@ -1,6 +1,4 @@
 {
-  "standard.autoFixOnSave": true,
-  "standard.usePackageJson": true,
   "[javascript]": {
     "editor.defaultFormatter": "standard.vscode-standard"
   },
@@ -12,5 +10,12 @@
   },
   "[typescriptreact]": {
     "editor.defaultFormatter": "standard.vscode-standard"
-  }
+  },
+  "explorer.excludeGitIgnore": true,
+  "git-graph.repository.commits.showSignatureStatus": true,
+  "git-graph.repository.sign.commits": true,
+  "git-graph.repository.sign.tags": true,
+  "git.enableCommitSigning": true,
+  "standard.autoFixOnSave": true,
+  "standard.usePackageJson": true
 }
