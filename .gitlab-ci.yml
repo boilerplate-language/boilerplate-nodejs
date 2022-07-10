@@ -34,14 +34,14 @@ test:
         coverage_format: cobertura
         path: coverage/cobertura-coverage.xml
 
-eslint:
-  stage: test
-  script:
-    - npx eslint --format junit . > report.xml
-  artifacts:
-    when: always
-    reports:
-      junit: report.xml
+# eslint:
+#   stage: test
+#   script:
+#     - npx eslint --format junit . > report.xml
+#   artifacts:
+#     when: always
+#     reports:
+#       junit: report.xml
 
 outdated:
   stage: test
