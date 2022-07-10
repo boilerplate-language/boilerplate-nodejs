@@ -24,7 +24,6 @@ build:
 
 test:
   stage: test
-  needs: ["eslint", "outdated", "sast"]
   script:
     - npm run coverage
   artifacts:
