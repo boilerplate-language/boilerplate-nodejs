@@ -1,0 +1,22 @@
+{
+    "source": {
+        "include": [
+            "routes",
+            "app.js",
+            "bin"
+        ],
+        "exclude": [
+            "node_modules",
+            "public",
+            "out",
+            "views"
+        ]
+    },
+    "plugins": [
+        "plugins/markdown"
+    ],
+    "opts": {
+        "destination": "public",
+        "template": "node_modules/minami"
+    }
+}
