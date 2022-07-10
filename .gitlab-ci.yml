@@ -68,10 +68,12 @@ jsdoc:
     - if: '$CI_COMMIT_BRANCH == "main"'
   script:
     - npm run doc
+  after_script:
+    - tar -cvf public.tar.gz public/
   artifacts:
     name: doc
     paths:
-      - public/
+      - public.tar.gz
 
 dmd:
   stage: publish
@@ -83,10 +85,12 @@ dmd:
     - npm run dmd
     - mkdir -p public/
     - mv api.md public/
+  after_script:
+    - tar -cvf public.tar.gz public/
   artifacts:
     name: dmd
     paths:
-      - public/
+      - public.tar.gz
 
 dockerize:
   stage: deploy
