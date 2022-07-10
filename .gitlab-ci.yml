@@ -1,0 +1,109 @@
+image: node:14-slim
+
+variables:
+  RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
+
+cache:
+  paths:
+    - node_modules/
+
+include:
+  - template: Security/SAST.gitlab-ci.yml
+
+stages:
+  - build
+  - test
+  - publish
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm ci
+    - npm run build
+
+test:
+  stage: test
+  script:
+    - npm run coverage
+  artifacts:
+    when: always
+    reports:
+      junit: dist/report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+
+eslint:
+  stage: test
+  dependencies:
+    - build
+  script:
+    - npx eslint --format junit . > report.xml
+  artifacts:
+    when: always
+    reports:
+      junit: report.xml
+
+outdated:
+  stage: test
+  dependencies:
+    - build
+  allow_failure: true
+  script:
+    - npm outdated
+
+sast:
+  stage: test
+  dependencies:
+    - build
+
+publish:
+  stage: publish
+  dependencies:
+    - build
+  script:
+    - npm publish
+
+jsdoc:
+  stage: publish
+  dependencies:
+    - build
+  script:
+    - npm run doc
+  artifacts:
+    name: doc
+    paths:
+      - public/
+
+dmd:
+  stage: publish
+  dependencies:
+    - build
+  script:
+    - npm run dmd
+    - mkdir -p public/
+    - mv api.md public/
+  artifacts:
+    name: dmd
+    paths:
+      - public/
+
+dockerize:
+  image: docker:latest
+  stage: deploy
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "autouser" -p "autouser" "monster:5002"
+  script:
+    - docker build --pull -t "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:latest" .
+    - docker push "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:latest"
+
+pages:
+  stage: deploy
+  script:
+    - echo 'Upload all report'
+  artifacts:
+    paths:
+      - public
