@@ -20,7 +20,9 @@
     "prepack": "cyclonedx-bom -o sbom.xml",
     "debug": "cross-env DEBUG=* nodemon --inspect ./bin/www",
     "dmd": "npx jsdoc2md -c .jsdoc.json -f . --no-gfm > api.md",
-    "doc": "npx jsdoc -c .jsdoc.json -P package.json -R README.md"
+    "doc": "npx jsdoc -c .jsdoc.json -P package.json -R README.md",
+    "prepare": "npm run snyk-protect",
+    "snyk-protect": "snyk-protect"
   },
   "dependencies": {
     "cookie-parser": "^1.4.6",
@@ -28,7 +30,8 @@
     "express": "^4.18.1",
     "http-errors": "^2.0.0",
     "jade": "^1.11.0",
-    "morgan": "^1.10.0"
+    "morgan": "^1.10.0",
+    "@snyk/protect": "latest"
   },
   "devDependencies": {
     "@cyclonedx/bom": "^3.10.4",
@@ -51,5 +54,6 @@
     "env": [
       "mocha"
     ]
-  }
+  },
+  "snyk": true
 }
