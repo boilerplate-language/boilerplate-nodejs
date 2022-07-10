@@ -1,8 +1,5 @@
 image: node:14-slim
 
-variables:
-  RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
-
 cache:
   paths:
     - node_modules/
@@ -54,6 +51,8 @@ sast:
 
 publish:
   stage: publish
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   script:
@@ -61,6 +60,8 @@ publish:
 
 jsdoc:
   stage: publish
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   script:
@@ -72,6 +73,8 @@ jsdoc:
 
 dmd:
   stage: publish
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   script:
@@ -86,6 +89,8 @@ dmd:
 dockerize:
   image: docker:latest
   stage: deploy
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
   rules:
     - if: '$CI_COMMIT_BRANCH == "main"'
   services:
