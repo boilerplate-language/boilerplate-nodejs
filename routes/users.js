@@ -1,9 +1,25 @@
-var express = require('express')
-var router = express.Router()
+/**
+ * userモジュール
+ * @module user
+ * @see module:app
+ */
+
+/** expressオブジェクト */
+const express = require('express')
+
+/** routerオブジェクト */
+const router = express.Router()
 
 /* GET users listing. */
-router.get('/', function (req, res, next) {
-  res.send('respond with a resource')
-})
+const users = async (req, res, next) => {
+  try {
+    res.send('respond with a resource')
+  } catch (error) {
+    // https://neos21.hatenablog.com/entry/2020/06/14/080000
+    next(error)
+  }
+}
+
+router.get('/', users)
 
 module.exports = router

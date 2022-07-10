@@ -12,11 +12,15 @@
   },
   "scripts": {
     "start": "node ./bin/www",
-    "test": "echo do test",
+    "build": "echo do build",
+    "coverage": "nyc npm run test",
+    "test": "mocha --timeout 10000 --reporter mocha-multi-reporters --reporter-options configFile=.mocha.json",
     "push": "git push --follow-tags origin main",
     "release": "standard-version",
     "prepack": "cyclonedx-bom -o sbom.xml",
-    "debug": "cross-env DEBUG=* nodemon --inspect ./bin/www"
+    "debug": "cross-env DEBUG=* nodemon --inspect ./bin/www",
+    "dmd": "npx jsdoc2md -c .jsdoc.json -f . --no-gfm > api.md",
+    "doc": "npx jsdoc -c .jsdoc.json -P package.json -R README.md"
   },
   "dependencies": {
     "cookie-parser": "~1.4.6",
@@ -27,10 +31,25 @@
     "morgan": "~1.10.0"
   },
   "devDependencies": {
-    "@cyclonedx/bom": "^3.10.0",
+    "@cyclonedx/bom": "^3.10.4",
     "cross-env": "^7.0.3",
-    "nodemon": "^2.0.17",
-    "standard": "^16.0.4",
-    "standard-version": "^9.5.0"
+    "expect": "^28.1.1",
+    "jsdoc": "^3.6.10",
+    "jsdoc-to-markdown": "^7.1.1",
+    "minami": "^1.2.3",
+    "mocha": "^10.0.0",
+    "mocha-multi-reporters": "^1.5.1",
+    "nodemon": "^2.0.19",
+    "nyc": "^15.1.0",
+    "rewire": "^6.0.0",
+    "sinon": "^14.0.0",
+    "standard": "^17.0.0",
+    "standard-version": "^9.5.0",
+    "supertest": "^6.2.4"
+  },
+  "standard": {
+    "env": [
+      "mocha"
+    ]
   }
 }

@@ -1,0 +1,112 @@
+image: node:14-slim
+
+cache:
+  paths:
+    - node_modules/
+
+include:
+  - template: Security/SAST.gitlab-ci.yml
+
+stages:
+  - build
+  - test
+  - publish
+  - deploy
+
+build:
+  stage: build
+  script:
+    - npm ci
+    - npm run build
+
+test:
+  stage: test
+  script:
+    - npm run coverage
+  artifacts:
+    when: always
+    reports:
+      junit: dist/report.xml
+      coverage_report:
+        coverage_format: cobertura
+        path: coverage/cobertura-coverage.xml
+
+# eslint:
+#   stage: test
+#   script:
+#     - npx eslint --format junit . > report.xml
+#   artifacts:
+#     when: always
+#     reports:
+#       junit: report.xml
+
+outdated:
+  stage: test
+  allow_failure: true
+  script:
+    - npm outdated
+
+sast:
+  stage: test
+
+publish:
+  stage: publish
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - npm publish
+
+jsdoc:
+  stage: publish
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - npm run doc
+  artifacts:
+    name: doc
+    paths:
+      - public/
+
+dmd:
+  stage: publish
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - npm run dmd
+    - mkdir -p public/
+    - mv api.md public/
+  artifacts:
+    name: dmd
+    paths:
+      - public/
+
+dockerize:
+  image: docker:latest
+  stage: deploy
+  variables:
+    RUNNER_GENERATE_ARTIFACTS_METADATA: "true"
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  services:
+    - docker:dind
+  before_script:
+    - docker login -u "autouser" -p "autouser" "monster:5002"
+  script:
+    - docker build --pull -t "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:latest" .
+    - docker push "${CI_PROJECT_NAMESPACE}/${CI_PROJECT_NAME}:latest"
+
+pages:
+  stage: deploy
+  rules:
+    - if: '$CI_COMMIT_BRANCH == "main"'
+  script:
+    - echo 'Upload all report'
+  artifacts:
+    paths:
+      - public
