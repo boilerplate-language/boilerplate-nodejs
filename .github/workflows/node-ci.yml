@@ -1,0 +1,71 @@
+name: Node.js CI
+
+on:
+  workflow_dispatch:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+  schedule:
+    - cron: "0 15 * * 0"
+
+permissions: read-all
+
+jobs:
+  build:
+    runs-on: ${{ matrix.os }}
+    permissions: # for EnricoMi/publish-unit-test-result-action
+      checks: write
+      pull-requests: write # for comment_mode
+      contents: read # only for private repository
+      issues: read # only for private repository
+    strategy:
+      matrix:
+        node-version: [14.x, 16.x]
+        os: [ubuntu-latest]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      - name: Setup Node.js environment
+        uses: ./.github/actions/node-setup
+        with:
+          node-version: ${{ matrix.node-version }}
+
+      - uses: oke-py/npm-audit-action@c2ee44bdb97ee28fe9f41d78779ee0127b687778
+        with:
+          github_token: ${{ secrets.GITHUB_TOKEN }}
+          dedupe_issues: true
+
+      - name: Build
+        shell: bash
+        run: npm run build --if-present
+
+      - name: Test
+        shell: bash
+        run: npm test
+
+  sast-codeql:
+    runs-on: ubuntu-latest
+    permissions:
+      actions: read
+      contents: read
+      security-events: write
+    strategy:
+      fail-fast: false
+      matrix:
+        language: ["javascript"]
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      - name: Initialize CodeQL
+        uses: github/codeql-action/init@3f62b754e23e0dd60f91b744033e1dc1654c0ec6
+        with:
+          languages: ${{ matrix.language }}
+
+      - name: Build automatically
+        uses: github/codeql-action/autobuild@3f62b754e23e0dd60f91b744033e1dc1654c0ec6
+
+      - name: Perform CodeQL Analysis
+        uses: github/codeql-action/analyze@3f62b754e23e0dd60f91b744033e1dc1654c0ec6

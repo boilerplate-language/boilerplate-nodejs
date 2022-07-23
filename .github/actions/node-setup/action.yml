@@ -1,27 +1,29 @@
-name: init-nodejs
+name: Setup Node.js
 
 inputs:
-  nodejs-version:
+  node-version:
     default: "14"
     required: false
-    description: "version of nodejs"
+    description: "Node.js version"
 
 runs:
   using: composite
   steps:
-    - name: setup node ${{ inputs.nodejs-version }}
+    - name: Setup node ${{ inputs.node-version }}
       uses: actions/setup-node@v2
       with:
-        node-version: ${{ inputs.nodejs-version }}
+        node-version: ${{ inputs.node-version }}
         registry-url: https://npm.pkg.github.com/
         cache: "npm"
+
     - name: cache node_modeuls
-      uses: actions/cache@v2
+      uses: actions/cache@c3f1317a9e7b1ef106c153ac8c0f00fed3ddbc0d
       id: node_cache_id
       with:
         path: node_modeuls/
         key: node-${{ runner.os }}-${{ hashFiles('**/package-lock.json') }}
-    - name: install
+
+    - name: Install dependencies
       if: steps.node_cache_id.outputs.cache-hit != 'true'
       shell: bash
       run: npm ci

@@ -16,7 +16,7 @@
         "plugins/markdown"
     ],
     "opts": {
-        "destination": "public",
+        "destination": "docs",
         "template": "node_modules/minami"
     }
 }

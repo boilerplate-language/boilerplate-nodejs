@@ -1,0 +1,57 @@
+name: Node.js Publish
+
+on:
+  workflow_dispatch: # for debug
+  push:
+    branches: [main]
+    tags:
+      - v*.*.*
+
+permissions: read-all
+
+jobs:
+  release:
+    runs-on: ubuntu-latest
+    if: ${{ github.ref_name != 'main' }}
+    permissions:
+      contents: write
+      packages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      - name: Setup Node.js environment
+        uses: ./.github/actions/node-setup
+        with:
+          nodejs-version: 14.x
+
+      - name: Publish package to registry
+        shell: bash
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{secrets.GITHUB_TOKEN}}
+
+  pages:
+    runs-on: ubuntu-latest
+    permissions:
+      contents: write
+      pages: write
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@2541b1294d2704b0964813337f33b291d3f8596b
+
+      - name: Setup Node.js environment
+        uses: ./.github/actions/node-setup
+        with:
+          nodejs-version: 14.x
+
+      - name: Generate jsdoc
+        run: npm run doc
+
+      - name: Publish API document to GitHub pages
+        uses: crazy-max/ghaction-github-pages@eb08c35b9fab86751edfff4e55cd5cde35ff0e52
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          target_branch: gh-pages
+          build_dir: public/
