@@ -42,7 +42,7 @@
     "nodemon": "^2.0.22",
     "nyc": "^15.1.0",
     "rewire": "^6.0.0",
-    "sinon": "^14.0.2",
+    "sinon": "^15.0.3",
     "standard": "^17.0.0",
     "standard-version": "^9.5.0",
     "supertest": "^6.3.3"
